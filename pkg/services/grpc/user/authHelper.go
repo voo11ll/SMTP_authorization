@@ -1,11 +1,10 @@
 package user
 
 import (
-	modelsOrganization "auth/auth_back/models/organization"
 	modelsUser "auth/auth_back/models/user"
 )
 
-func toUserResponse(in *modelsUser.User, role *modelsUser.Role, businessUniverse *modelsOrganization.BusinessUniverse) *User {
+func toUserResponse(in *modelsUser.User, role *modelsUser.Role) *User {
 	return &User{
 		Id:         in.ID.String(),
 		FirstName:  in.FirstName,
@@ -17,11 +16,6 @@ func toUserResponse(in *modelsUser.User, role *modelsUser.Role, businessUniverse
 		Role: &Role{
 			Id:   role.ID.String(),
 			Name: role.Name,
-		},
-		BusinessUniverse: &BusinessUniverse{
-			Id:     businessUniverse.ID.String(),
-			Name:   businessUniverse.Name,
-			Domain: businessUniverse.Domain,
 		},
 	}
 }

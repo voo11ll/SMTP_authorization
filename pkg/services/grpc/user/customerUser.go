@@ -44,12 +44,11 @@ func (s *GrpcServer) AddCustomerUser(ctx context.Context, in *CustomerUserAddReq
 		}, nil
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		customer := s.CustomerRepo.FindItemById(ctx, user.CustomerID)
 		return &CustomerUserResponse{
 			Code:         globalvars.StatusOK,
 			Message:      message,
-			CustomerUser: toCustomerUserResponse(user, role, businessUniverse, customer, s),
+			CustomerUser: toCustomerUserResponse(user, role, customer, s),
 		}, nil
 	}
 }
@@ -60,13 +59,12 @@ func (s *GrpcServer) GetCustomerUserByEmail(ctx context.Context, in *CustomerUse
 
 	userFounded := s.CustomerUserRepo.FindItemByEmail(context.TODO(), email)
 	role := s.RoleRepo.FindItemById(ctx, userFounded.RoleID)
-	businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, userFounded.BusinessUniverseID)
 	customer := s.CustomerRepo.FindItemById(ctx, userFounded.CustomerID)
 
 	return &CustomerUserResponse{
 		Code:         globalvars.StatusOK,
 		Message:      "User get success",
-		CustomerUser: toCustomerUserResponse(userFounded, role, businessUniverse, customer, s),
+		CustomerUser: toCustomerUserResponse(userFounded, role, customer, s),
 	}, nil
 }
 
@@ -76,13 +74,12 @@ func (s *GrpcServer) GetCustomerUserById(ctx context.Context, in *CustomerUserGe
 
 	userFounded := s.CustomerUserRepo.FindItemById(context.TODO(), id)
 	role := s.RoleRepo.FindItemById(ctx, userFounded.RoleID)
-	businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, userFounded.BusinessUniverseID)
 	customer := s.CustomerRepo.FindItemById(ctx, userFounded.CustomerID)
 
 	return &CustomerUserResponse{
 		Code:         globalvars.StatusOK,
 		Message:      "User get success",
-		CustomerUser: toCustomerUserResponse(userFounded, role, businessUniverse, customer, s),
+		CustomerUser: toCustomerUserResponse(userFounded, role, customer, s),
 	}, nil
 }
 
@@ -106,12 +103,11 @@ func (s *GrpcServer) UpdateCustomerUser(ctx context.Context, in *CustomerUserUpd
 		}, nil
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		customer := s.CustomerRepo.FindItemById(ctx, user.CustomerID)
 		return &CustomerUserResponse{
 			Code:         globalvars.StatusOK,
 			Message:      message,
-			CustomerUser: toCustomerUserResponse(user, role, businessUniverse, customer, s),
+			CustomerUser: toCustomerUserResponse(user, role, customer, s),
 		}, nil
 	}
 }
@@ -142,12 +138,11 @@ func (s *GrpcServer) ChangeCustomerUserPassword(ctx context.Context, in *Custome
 		}, err
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		customer := s.CustomerRepo.FindItemById(ctx, user.CustomerID)
 		return &CustomerUserResponse{
 			Code:         globalvars.StatusOK,
 			Message:      message,
-			CustomerUser: toCustomerUserResponse(user, role, businessUniverse, customer, s),
+			CustomerUser: toCustomerUserResponse(user, role, customer, s),
 		}, nil
 	}
 }

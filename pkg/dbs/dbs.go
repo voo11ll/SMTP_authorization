@@ -31,8 +31,8 @@ func InitDB() *gorm.DB {
 	)
 
 	db, errConnect := gorm.Open(postgres.New(postgres.Config{
-		// DSN: viper.GetString("postgres.uri"),
-		DSN:                  viper.GetString("postgres.uri_local"),
+		DSN: viper.GetString("postgres.uri"),
+		// DSN:                  viper.GetString("postgres.uri_local"),
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{
 		// DisableForeignKeyConstraintWhenMigrating: true,

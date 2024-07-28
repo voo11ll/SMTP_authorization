@@ -39,7 +39,7 @@ func testSignUpUser() {
 	c := auth.NewB24UserServiceClient(conn)
 
 	response, err := c.SignUp(context.Background(), &auth.SignUpRequest{
-		Email:     "",
+		Email:     "andrey.melkov@gmail.com",
 		Password:  "123456",
 		Phone:     "1234567",
 		FirstName: "User",
@@ -68,7 +68,7 @@ func testSignInUser() {
 	c := auth.NewB24UserServiceClient(conn)
 
 	response, err := c.SignIn(context.Background(), &auth.SignInRequest{
-		Email:    "",
+		Email:    "andrey.melkov@gmail.com",
 		Password: "123456",
 	})
 

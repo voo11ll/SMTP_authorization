@@ -25,12 +25,11 @@ func (s *GrpcServer) GetUserByEmail(ctx context.Context, in *UserGetByEmailReque
 	}
 
 	role := s.RoleRepo.FindItemById(ctx, userFounded.RoleID)
-	businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, userFounded.BusinessUniverseID)
 
 	return &UserResponse{
 		Code:    globalvars.StatusOK,
 		Message: "User get success",
-		User:    toUserResponse(userFounded, role, businessUniverse),
+		User:    toUserResponse(userFounded, role),
 	}, nil
 }
 
@@ -40,12 +39,11 @@ func (s *GrpcServer) GetUserById(ctx context.Context, in *UserGetByIdRequest) (*
 
 	userFounded := s.UserRepo.FindItemById(context.TODO(), id)
 	role := s.RoleRepo.FindItemById(ctx, userFounded.RoleID)
-	businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, userFounded.BusinessUniverseID)
 
 	return &UserResponse{
 		Code:    globalvars.StatusOK,
 		Message: "User get success",
-		User:    toUserResponse(userFounded, role, businessUniverse),
+		User:    toUserResponse(userFounded, role),
 	}, nil
 }
 
@@ -69,11 +67,10 @@ func (s *GrpcServer) UpdateUser(ctx context.Context, in *UserUpdateRequest) (*Us
 		}, nil
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		return &UserResponse{
 			Code:    globalvars.StatusOK,
 			Message: message,
-			User:    toUserResponse(user, role, businessUniverse),
+			User:    toUserResponse(user, role),
 		}, nil
 	}
 }
@@ -104,11 +101,10 @@ func (s *GrpcServer) ChangePassword(ctx context.Context, in *UserChangePasswordR
 		}, err
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		return &UserResponse{
 			Code:    globalvars.StatusOK,
 			Message: message,
-			User:    toUserResponse(user, role, businessUniverse),
+			User:    toUserResponse(user, role),
 		}, nil
 	}
 }

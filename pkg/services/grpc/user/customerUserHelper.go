@@ -42,7 +42,7 @@ func GetCustomerGrpcClient(id string) *organization.CustomerResponse {
 	return response
 }
 
-func toCustomerUserResponse(in *modelsOrganization.CustomerUser, role *modelsUser.Role, businessUniverse *modelsOrganization.BusinessUniverse, customer *modelsOrganization.Customer, s *GrpcServer) *CustomerUser {
+func toCustomerUserResponse(in *modelsOrganization.CustomerUser, role *modelsUser.Role, customer *modelsOrganization.Customer, s *GrpcServer) *CustomerUser {
 	return &CustomerUser{
 		Id:         in.ID.String(),
 		FirstName:  in.FirstName,
@@ -54,11 +54,6 @@ func toCustomerUserResponse(in *modelsOrganization.CustomerUser, role *modelsUse
 		Role: &Role{
 			Id:   role.ID.String(),
 			Name: role.Name,
-		},
-		BusinessUniverse: &BusinessUniverse{
-			Id:     businessUniverse.ID.String(),
-			Name:   businessUniverse.Name,
-			Domain: businessUniverse.Domain,
 		},
 		Customer: &Customer{
 			Id:           customer.ID.String(),

@@ -2,8 +2,6 @@ package authHandler
 
 import (
 	"auth/auth_back/pkg/services/grpc/user"
-	businessUniverseHandler "auth/auth_back/pkg/services/http/organization/businessUniverse"
-	customerHandler "auth/auth_back/pkg/services/http/organization/customer"
 	roleHandler "auth/auth_back/pkg/services/http/user/role"
 )
 
@@ -18,30 +16,27 @@ func toSignInResponse(r *user.UserResponse, token string) *SignInResponse {
 		Token:   token,
 		Message: r.Message,
 		User: UserType{
-			Id:               r.User.Id,
-			FirstName:        r.User.FirstName,
-			SecondName:       r.User.SecondName,
-			LastName:         r.User.LastName,
-			Email:            r.User.Email,
-			Phone:            r.User.Phone,
-			Avatar:           r.User.Avatar,
-			Role:             toRoleType(r.User.Role),
-			BusinessUniverse: toBusinessUniverseType(r.User.BusinessUniverse),
+			Id:         r.User.Id,
+			FirstName:  r.User.FirstName,
+			SecondName: r.User.SecondName,
+			LastName:   r.User.LastName,
+			Email:      r.User.Email,
+			Phone:      r.User.Phone,
+			Avatar:     r.User.Avatar,
+			Role:       toRoleType(r.User.Role),
 		},
 	}
 }
 
 type UserType struct {
-	Id               string                                       `json:"id"`
-	FirstName        string                                       `json:"firstName"`
-	LastName         string                                       `json:"lastName"`
-	SecondName       string                                       `json:"secondName"`
-	Email            string                                       `json:"email"`
-	Phone            string                                       `json:"phone"`
-	Avatar           string                                       `json:"avatar"`
-	Role             roleHandler.RoleType                         `json:"role"`
-	Customer         customerHandler.CustomerType                 `json:"customer"`
-	BusinessUniverse businessUniverseHandler.BusinessUniverseType `json:"businessUniverse"`
+	Id         string               `json:"id"`
+	FirstName  string               `json:"firstName"`
+	LastName   string               `json:"lastName"`
+	SecondName string               `json:"secondName"`
+	Email      string               `json:"email"`
+	Phone      string               `json:"phone"`
+	Avatar     string               `json:"avatar"`
+	Role       roleHandler.RoleType `json:"role"`
 }
 
 type EmailConfirmResponse struct {
@@ -66,15 +61,14 @@ func toSignUpResponse(r *user.UserResponse) *SignUpResponse {
 	return &SignUpResponse{
 		Message: r.Message,
 		User: UserType{
-			Id:               r.User.Id,
-			FirstName:        r.User.FirstName,
-			SecondName:       r.User.SecondName,
-			LastName:         r.User.LastName,
-			Email:            r.User.Email,
-			Phone:            r.User.Phone,
-			Avatar:           r.User.Avatar,
-			Role:             toRoleType(r.User.Role),
-			BusinessUniverse: toBusinessUniverseType(r.User.BusinessUniverse),
+			Id:         r.User.Id,
+			FirstName:  r.User.FirstName,
+			SecondName: r.User.SecondName,
+			LastName:   r.User.LastName,
+			Email:      r.User.Email,
+			Phone:      r.User.Phone,
+			Avatar:     r.User.Avatar,
+			Role:       toRoleType(r.User.Role),
 		},
 	}
 }
@@ -90,17 +84,17 @@ func toRoleType(r *user.Role) roleHandler.RoleType {
 	}
 }
 
-func toBusinessUniverseType(r *user.BusinessUniverse) businessUniverseHandler.BusinessUniverseType {
-	if r == nil {
-		return businessUniverseHandler.BusinessUniverseType{}
-	}
+// func toBusinessUniverseType(r *user.BusinessUniverse) businessUniverseHandler.BusinessUniverseType {
+// 	if r == nil {
+// 		return businessUniverseHandler.BusinessUniverseType{}
+// 	}
 
-	return businessUniverseHandler.BusinessUniverseType{
-		Id:     r.Id,
-		Name:   r.Name,
-		Domain: r.Domain,
-	}
-}
+// 	return businessUniverseHandler.BusinessUniverseType{
+// 		Id:     r.Id,
+// 		Name:   r.Name,
+// 		Domain: r.Domain,
+// 	}
+// }
 
 // func toCustomerType(r *user.Customer) customerHandler.CustomerType {
 // 	if r == nil {

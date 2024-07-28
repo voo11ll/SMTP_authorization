@@ -4,7 +4,6 @@ import (
 	"auth/auth_back/config"
 	"auth/auth_back/pkg/dbs"
 	"auth/auth_back/pkg/logger"
-	businessUniverseRepository "auth/auth_back/pkg/repositories/businessUniverse"
 	contactTypeRepository "auth/auth_back/pkg/repositories/contactType"
 	customerRepository "auth/auth_back/pkg/repositories/customer"
 	customerUserRepository "auth/auth_back/pkg/repositories/customerUser"
@@ -35,7 +34,6 @@ func main() {
 	userRepo := userRepository.ConnectRepository(db)
 	roleRepo := roleRepository.ConnectRepository(db)
 	customerUserRepo := customerUserRepository.ConnectRepository(db)
-	businessUniverseRepo := businessUniverseRepository.ConnectRepository(db)
 	contactTypeRepo := contactTypeRepository.ConnectRepository(db)
 	customerRepo := customerRepository.ConnectRepository(db)
 	notifyRepo := notificationRepository.ConnectRepository(db)
@@ -52,7 +50,6 @@ func main() {
 		UserRepo:                          userRepo,
 		RoleRepo:                          roleRepo,
 		CustomerUserRepo:                  customerUserRepo,
-		BusinessUniverseRepo:              businessUniverseRepo,
 		ContactTypeRepo:                   contactTypeRepo,
 		CustomerRepo:                      customerRepo,
 		NotifyRepo:                        notifyRepo,

@@ -96,7 +96,6 @@ func (r UserRepository) CreateItem(ctx context.Context, user *User) (*models.Use
 	}
 
 	roleId, _ := uuid.Parse(user.RoleID)
-	businessUniverseId, _ := uuid.Parse(user.BusinessUniverseID)
 
 	newItem := &models.User{
 		FirstName:  user.FirstName,
@@ -106,8 +105,7 @@ func (r UserRepository) CreateItem(ctx context.Context, user *User) (*models.Use
 		Email:      user.Email,
 		Password:   user.Password,
 		// Avatar:             user.Avatar,
-		RoleID:             roleId,
-		BusinessUniverseID: businessUniverseId,
+		RoleID: roleId,
 	}
 
 	tx := r.db.Create(&newItem)
@@ -144,17 +142,17 @@ func (r UserRepository) FindItemById(ctx context.Context, id uuid.UUID) *models.
 	return findedItem
 }
 
-func (r UserRepository) FindAllItems(ctx context.Context, businessUniverseId uuid.UUID) []*models.User {
-	var findedItems []*models.User
+// func (r UserRepository) FindAllItems(ctx context.Context, businessUniverseId uuid.UUID) []*models.User {
+// 	var findedItems []*models.User
 
-	tx := r.db.Where("business_universe_id = ?", businessUniverseId).Find(&findedItems)
+// 	tx := r.db.Where("business_universe_id = ?", businessUniverseId).Find(&findedItems)
 
-	if tx.Error != nil {
-		return nil
-	}
+// 	if tx.Error != nil {
+// 		return nil
+// 	}
 
-	return findedItems
-}
+// 	return findedItems
+// }
 
 func (r UserRepository) UpdateItem(ctx context.Context, item *User, itemId uuid.UUID) (*models.User, string, error) {
 	findedItem := r.FindItemById(ctx, itemId)

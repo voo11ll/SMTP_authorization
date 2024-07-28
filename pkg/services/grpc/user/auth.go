@@ -41,11 +41,10 @@ func (s *GrpcServer) SignUp(ctx context.Context, in *SignUpRequest) (*UserRespon
 	if existUserEmail != nil {
 		l.LogNotify("User with "+in.Email+" exist, failed create", "pkg/repositories/UserRepository/UserRepository.CreateUser")
 		role := s.RoleRepo.FindItemById(ctx, existUserEmail.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, existUserEmail.BusinessUniverseID)
 		return &UserResponse{
 			Code:    globalvars.ContentExist,
 			Message: "User exist",
-			User:    toUserResponse(existUserEmail, role, businessUniverse),
+			User:    toUserResponse(existUserEmail, role),
 		}, nil
 	}
 
@@ -78,7 +77,6 @@ func (s *GrpcServer) SignUp(ctx context.Context, in *SignUpRequest) (*UserRespon
 		}, nil
 	}
 	role = s.RoleRepo.FindItemById(ctx, user.RoleID)
-	businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 	hashKey, _ := passwordHelper.HashPassword(user.Email)
 	newUser := s.UserRepo.FindItemByEmail(ctx, user.Email)
 	if newUser == nil {
@@ -142,7 +140,7 @@ func (s *GrpcServer) SignUp(ctx context.Context, in *SignUpRequest) (*UserRespon
 	return &UserResponse{
 		Code:    globalvars.StatusOK,
 		Message: response.Message,
-		User:    toUserResponse(user, role, businessUniverse),
+		User:    toUserResponse(user, role),
 	}, nil
 
 }
@@ -184,11 +182,10 @@ func (s *GrpcServer) SignIn(ctx context.Context, in *SignInRequest) (*UserRespon
 		}, nil
 	} else {
 		role := s.RoleRepo.FindItemById(ctx, user.RoleID)
-		businessUniverse := s.BusinessUniverseRepo.FindBusinessUniverseById(ctx, user.BusinessUniverseID)
 		return &UserResponse{
 			Code:    globalvars.StatusOK,
 			Message: "User logged in success",
-			User:    toUserResponse(user, role, businessUniverse),
+			User:    toUserResponse(user, role),
 		}, nil
 	}
 }
