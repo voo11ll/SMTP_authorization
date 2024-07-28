@@ -1,0 +1,48 @@
+port: 8000
+
+api:
+  url: "http://0.0.0.0:82/api/"
+
+auth:
+  hash_salt: "business universe"
+  signing_key: "3430bc4181f10c5c023d1c99fea55e26d3fa8f7a"
+  token_exp: 60
+
+services:
+  dadata:
+    api_key: "92f5f22f0395af26d982409f581d76c51a67a6a7"
+    secret_key: "3430bc4181f10c5c023d1c99fea55e26d3fa8f7a"
+    url: "https://suggestions.dadata.ru/suggestions/api/4_1/rs/suggest/party"
+
+postgres:
+  uri: "host=b24-db user=postgres password=2yZnWGfq8G dbname=postgres port=5432 sslmode=disable"
+  uri_local: "host=localhost user= password= dbname=postgres port=5432 sslmode=disable"
+
+grpc:
+  organization:
+    port: "9000"
+    host: "b24-organization-grpc"
+  user:
+    port: "9001"
+    host: "b24-user-grpc"
+  notification:
+    port: "9002"
+    host: "b24-notification-grpc"
+
+http:
+  organization:
+    port: "8090"
+    host: "b24-organization-http"
+  user:
+    port: "8091"
+    host: "b24-user-http"
+
+domain:
+  templateUrl: ".bnet24.com"
+
+mail:
+  auth:
+    user: ""
+    password: "idxdruewomrzzbix"
+    host: "smtp.mail.com"
+    port: "587"

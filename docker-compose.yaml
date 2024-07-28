@@ -1,0 +1,85 @@
+version: '3.5'
+services:
+  b24-nginx:
+    image: nginx:latest
+    container_name: b24-nginx-proxy
+    restart: always
+    ports:
+      - "82:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./logs/nginx:/var/log/nginx
+      - ./static:/static
+    links:
+      - b24-user-http
+      - b24-organization-http
+
+  b24-db:
+    image: postgres:latest
+    restart: always
+    container_name: b24-db
+    environment:
+      POSTGRES_PASSWORD: "2yZnWGfq8G"
+      PGDATA: "/var/lib/postgresql/pgdata"
+    ports:
+      - "5433:5432"
+    # volumes:
+    #   - ./db_data:/var/lib/postgresql/pgdata
+
+  b24-user-grpc:
+    restart: always
+    container_name: b24-user-grpc
+    build:
+      context: .
+      dockerfile: docker/user_grpc
+    links:
+      - b24-db
+    volumes:
+      - ./logs/services:/logs/services
+      - ./static:/static
+
+  b24-user-http:
+    restart: always
+    container_name: b24-user-http
+    build:
+      context: .
+      dockerfile: docker/user_http
+    links:
+      - b24-db
+    volumes:
+      - ./logs/services:/logs/services
+      - ./static:/static
+
+  b24-organization-grpc:
+    restart: always
+    container_name: b24-organization-grpc
+    build:
+      context: .
+      dockerfile: docker/organization_grpc
+    links:
+      - b24-db
+    volumes:
+      - ./logs/services:/logs/services
+      - ./static:/static
+
+  b24-organization-http:
+    restart: always
+    container_name: b24-organization-http
+    build:
+      context: .
+      dockerfile: docker/organization_http
+    links:
+      - b24-db
+    volumes:
+      - ./logs/services:/logs/services
+      - ./static:/static
+
+  b24-notification-grpc:
+    restart: always
+    container_name: b24-notification-grpc
+    build:
+      context: .
+      dockerfile: docker/notification_grpc
+    volumes:
+      - ./logs/services:/logs/services
+      - ./static:/static

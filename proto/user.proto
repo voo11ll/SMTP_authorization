@@ -1,0 +1,260 @@
+syntax = "proto3";
+package user;
+
+option go_package = "jetbrains.space/bnet24/bnet-24/b24_back/pkg/service/grpc/user;user";
+
+message BusinessUniverse {
+    string id = 1;
+    string name = 2;
+    string domain = 3;
+}
+
+// AUTH
+message SignUpRequest {
+    string email = 1;
+    string password = 2;
+    string firstName = 3;
+    string lastName = 4;
+    string phone = 5;
+}
+
+message SignInRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message UserResponse {
+    int32 code = 1;
+    string message = 2;
+    User user = 3;
+}
+
+message CustomerUserResponse {
+    int32 code = 1;
+    string message = 2;
+    CustomerUser customerUser = 3;
+}
+
+/** 
+* Company USER
+**/
+
+message UserGetByEmailRequest {
+    string email = 1;
+}
+
+message UserGetByIdRequest {
+    string id = 1;
+}
+
+message User {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string secondName = 4;
+    string phone = 5;
+    string email = 6;
+    string avatar = 7;
+    Role role = 8;
+    BusinessUniverse businessUniverse = 9;
+}
+
+message UsersGetRequest {
+    string businessUniverseID = 1;
+}
+
+message UsersGetResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated User users = 3;
+}
+
+message UserUpdateRequest {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string secondName = 4;
+    string phone = 5;
+}
+
+message UserRoleUpdateRequest {
+    string id = 1;
+    string roleID = 2;
+}
+
+message UserAvatarUpdateRequest {
+    string id = 1;
+    string avatar = 2;
+}
+
+message UserChangePasswordRequest {
+    string id = 1;
+    string password = 2;
+}
+
+/** 
+* Customer USER
+**/
+
+message Customer {
+    string id = 1;	
+    string name = 2;
+	string fullName = 3;
+	int32 inn = 4;
+	int32 kpp = 5;
+	string legalAddress = 6;
+	repeated Bank banks = 7;
+	repeated ContactInfo contactInfos = 8;
+	BusinessUniverse businessUniverse = 9;
+}
+
+message ContactType {
+    string id = 1;
+    string name = 2;
+    string notion = 3;
+}
+
+message Bank {
+    string id = 1;
+	string name = 2;
+	string accountNumber = 3;
+	string bik = 4;
+	string corrAccountNumber = 5;
+	bool isOpen = 6;
+}
+
+message ContactInfo {
+    string id = 1;
+	ContactType contactType = 2;
+	string value = 3;
+}
+
+message CustomerUser {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string secondName = 4;
+    string phone = 5;
+    string email = 6;
+    string avatar = 7;
+    Role role = 8;
+    Customer customer = 9;
+    BusinessUniverse businessUniverse = 10;
+}
+
+message CustomerUserAddRequest {
+    string email = 1;
+    string password = 2;
+    string roleID = 3;
+    string customerID = 4;
+    string businessUniverseID = 5;
+}
+
+message CustomerUserGetByEmailRequest {
+    string email = 1;
+}
+
+message CustomerUserGetByIdRequest {
+    string id = 1;
+}
+
+message CustomerUsersGetRequest {
+    string customerID = 1;
+}
+
+message CustomerUsersGetResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated CustomerUser customerUsers = 3;
+}
+
+message CustomerUserUpdateRequest {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+    string secondName = 4;
+    string phone = 5;
+}
+
+message CustomerUserRoleUpdateRequest {
+    string id = 1;
+    string roleID = 2;
+}
+
+message CustomerUserAvatarUpdateRequest {
+    string id = 1;
+    string avatar = 2;
+}
+
+message CustomerUserChangePasswordRequest {
+    string id = 1;
+    string password = 2;
+}
+
+// ROLE
+message Role {
+    string id = 1;
+    string name = 2;
+}
+
+message RoleCreateRequest {
+    string name = 1;
+}
+
+message RoleResponse {
+    int32 code = 1;
+    string message = 2;
+    Role Role = 3;
+}
+
+message RoleGetRequest {
+    string id = 1;
+}
+
+message RolesGetRequest {
+}
+
+message RolesGetResponse {
+    int32 code = 1;
+    string message = 2;
+
+    repeated Role Roles = 3;
+}
+
+message RoleGetByNameRequest {
+    string name = 1;
+}
+
+message RoleUpdateRequest {
+    string id = 1;
+    string name = 2;
+}
+
+service B24UserService {
+    // auth
+    rpc SignUp(SignUpRequest) returns (UserResponse) {}
+    rpc SignIn(SignInRequest) returns (UserResponse) {}
+    // company user
+    rpc GetUserByEmail(UserGetByEmailRequest) returns (UserResponse) {}
+    rpc GetUserById(UserGetByIdRequest) returns (UserResponse) {}
+    rpc GetUsers(UsersGetRequest) returns (UsersGetResponse) {}
+    rpc UpdateUser(UserUpdateRequest) returns (UserResponse) {}
+    rpc UpdateUserRole(UserRoleUpdateRequest) returns (UserResponse) {}
+    rpc UpdateUserAvatar(UserAvatarUpdateRequest) returns (UserResponse) {}
+    rpc ChangePassword(UserChangePasswordRequest) returns (UserResponse) {}
+    // customer user
+    rpc AddCustomerUser(CustomerUserAddRequest) returns (CustomerUserResponse) {}
+    rpc GetCustomerUserByEmail(CustomerUserGetByEmailRequest) returns (CustomerUserResponse) {}
+    rpc GetCustomerUserById(CustomerUserGetByIdRequest) returns (CustomerUserResponse) {}
+    rpc GetCustomerUsers(CustomerUsersGetRequest) returns (CustomerUsersGetResponse) {}
+    rpc UpdateCustomerUser(CustomerUserUpdateRequest) returns (CustomerUserResponse) {}
+    rpc UpdateCustomerUserRole(CustomerUserRoleUpdateRequest) returns (CustomerUserResponse) {}
+    rpc UpdateCustomerUserAvatar(CustomerUserAvatarUpdateRequest) returns (CustomerUserResponse) {}
+    rpc ChangeCustomerUserPassword(CustomerUserChangePasswordRequest) returns (CustomerUserResponse) {}
+    //role
+    rpc CreateRole(RoleCreateRequest) returns (RoleResponse) {}
+    rpc GetRole(RoleGetRequest) returns (RoleResponse) {}
+    rpc GetRoleByName(RoleGetByNameRequest) returns (RoleResponse) {}
+    rpc GetRoles(RolesGetRequest) returns (RolesGetResponse) {}
+    rpc UpdateRole(RoleUpdateRequest) returns (RoleResponse) {}
+}

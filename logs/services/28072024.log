@@ -1,0 +1,4 @@
+[INFO] 28/07/2024 13:35:03: POST	/user/sign-up	SignUp	9.881673679s (SignUp)
+[INFO] 28/07/2024 13:35:46: GET	/user/email-confirm?id=b6a5322f-7ae4-428f-b13a-71c1a2f260bb&key=$2a$14$3yZI2f7jm7YMIrQzONelQe.fkI6955Q42zGVG1ZIdasir5ALGFpaG	EmailConfirm	26.388599ms (EmailConfirm)
+[INFO] 28/07/2024 13:51:14: POST	/user/sign-in	SignIn	1.424774085s (SignIn)
+[INFO] 28/07/2024 18:02:35: POST	/user/sign-in	SignIn	1.498780906s (SignIn)

@@ -1,0 +1,4 @@
+FROM scratch
+ADD ./build/user_http /
+ADD config/config.yml /config/
+CMD ["/user_http"]

@@ -1,0 +1,371 @@
+syntax = "proto3";
+package organization;
+
+option go_package = "jetbrains.space/bnet24/bnet-24/b24_back/pkg/service/grpc/organization;organization";
+
+/** 
+* main structures
+**/
+
+message BusinessUniverse {
+    string id = 1;
+    string name = 2;
+    string domain = 3;
+}
+
+message Company {
+    string id = 1;	
+    string name = 2;
+	string fullName = 3;
+	int32 inn = 4;
+	int32 kpp = 5;
+	string legalAddress = 6;
+	repeated Bank banks = 7;
+	repeated ContactInfo contactInfos = 8;
+	BusinessUniverse businessUniverse = 9;
+}
+
+message ContactInfoCreateType {
+    string contactTypeID = 1;
+    string value = 2;
+}
+
+// company and customer create, get, gets, update, delete request/response
+message CreateRequest {
+    string name = 1;
+	string fullName = 2;
+	int32 inn = 3;
+	int32 kpp = 4;
+	string legalAddress = 5;
+	repeated Bank banks = 6;
+
+	repeated ContactInfoCreateType contactInfos = 7;
+	string businessUniverseID = 8;
+}
+
+message GetRequest {
+    string id = 1;
+}
+
+message GetsRequest {
+    string businessUniverseId = 1;
+}
+
+message UpdateRequest {
+    string id = 1;
+    string name = 2;
+	string fullName = 3;
+	int32 inn = 4;
+	int32 kpp = 5;
+	string legalAddress = 6;
+}
+
+message DeleteRequest {
+    string id = 1;
+}
+
+message DeleteResponse {
+    int32 code = 1;
+    string message = 2;
+}
+//////////
+
+message Bank {
+    string id = 1;
+	string name = 2;
+	string accountNumber = 3;
+	string bik = 4;
+	string corrAccountNumber = 5;
+	bool isOpen = 6;
+}
+
+message ContactInfo {
+    string id = 1;
+	ContactType contactType = 2;
+	string value = 3;
+}
+
+message Customer {
+    string id = 1;	
+    string name = 2;
+	string fullName = 3;
+	int32 inn = 4;
+	int32 kpp = 5;
+	string legalAddress = 6;
+	repeated Bank banks = 7;
+	repeated ContactInfo contactInfos = 8;
+	BusinessUniverse businessUniverse = 9;
+}
+
+message ContactType {
+    string id = 1;
+    string name = 2;
+    string notion = 3;
+}
+
+message BankResponse {
+    int32 code = 1;
+    string message = 2;
+    Bank bank = 3;
+}
+
+message GetBanksResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated Bank banks = 3;
+}
+
+message UpdateBankRequest {
+    string id = 1;
+	string name = 2;
+	string accountNumber = 3;
+	string bik = 4;
+	string corrAccountNumber = 5;
+}
+
+message CloseBankRequest {
+    string id = 1;
+	bool isOpen = 2;
+}
+
+message GetBankRequest {
+    string id = 1;
+}
+
+message GetBankResponse {
+    int32 code = 1;
+    string message = 2;
+    Bank bank = 3;
+}
+
+message GetContactInfosResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated ContactInfo contactInfos = 3;
+}
+
+message GetContactInfoRequest {
+    string id = 1;
+}
+
+message GetContactInfoResponse {
+    int32 code = 1;
+    string message = 2;
+    ContactInfo contactInfo = 3;
+}
+
+message UpdateContactInfoRequest {
+    string id = 1;
+	string contactTypeID = 2;
+	string value = 3;
+}
+
+message DeleteContactInfoRequest {
+    string id = 1;
+}
+
+/** 
+* Business Universe responses and requests
+**/
+
+message BusinessUniverseCreateRequest {}
+
+message BusinessUniverseCreateResponse {
+    int32 code = 1;
+    string message = 2;
+    BusinessUniverse businessUniverse = 3;
+}
+
+message BusinessUniverseGetRequest {
+    string id = 1;
+}
+
+message BusinessUniverseGetResponse {
+    int32 code = 1;
+    string message = 2;
+
+    BusinessUniverse businessUniverse = 3;
+}
+
+message BusinessUniverseUpdateRequest {
+    string id = 1;
+    string name = 2;
+    string domain = 3;
+}
+
+message BusinessUniverseUpdateResponse {
+    int32 code = 1;
+    string message = 2;
+    BusinessUniverse businessUniverse = 3;
+}
+
+/** 
+* Company - own company responses and requests
+**/
+
+message CompanyResponse {
+    int32 code = 1;
+    string message = 2;
+    Company company = 3;
+}
+
+message CompaniesGetResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated Company companies = 3;
+}
+
+// company bank
+message AddCompanyBankRequest {
+    string companyId = 1;
+    Bank bank = 2;
+}
+
+message GetCompanyBanksRequest {
+    string companyId = 1;
+}
+
+// company contact info
+message AddCompanyContactInfoRequest {
+    string companyId = 1;
+
+    ContactInfoCreateType contactInfo = 2;
+}
+
+message GetCompanyContactInfosRequest {
+    string companyId = 1;
+}
+
+
+/** 
+* Customer - customer responses and requests
+**/
+
+message CustomerResponse {
+    int32 code = 1;
+    string message = 2;
+    Customer customer = 3;
+}
+
+message CustomersGetResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated Customer customers = 3;
+}
+
+// Customer bank
+message AddCustomerBankRequest {
+    string customerId = 1;
+    Bank bank = 2;
+}
+
+message GetCustomerBanksRequest {
+    string customerId = 1;
+}
+
+// company contact info
+message AddCustomerContactInfoRequest {
+    string customerId = 1;
+
+    ContactInfoCreateType contactInfo = 2;
+}
+
+message GetCustomerContactInfosRequest {
+    string customerId = 1;
+}
+
+/**
+* Contact type responses and requests
+**/
+
+message ContactTypeCreateRequest {
+    string name = 1;
+    string notion = 2;
+}
+
+message ContactTypeResponse {
+    int32 code = 1;
+    string message = 2;
+    ContactType contactType = 3;
+}
+
+message ContactTypeGetRequest {
+    string id = 1;
+}
+
+message ContactTypesGetRequest {}
+
+message ContactTypesResponse {
+    int32 code = 1;
+    string message = 2;
+    repeated ContactType contactTypes = 3;
+}
+
+message ContactTypeUpdateRequest {
+    string id = 1;
+    string name = 2;
+    string notion = 3;
+}
+
+service B24OrganizationService {
+    /** 
+    * Business Universe
+    **/
+    rpc CreateBusinessUniverse(BusinessUniverseCreateRequest) returns (BusinessUniverseCreateResponse) {}
+    rpc GetBusinessUniverse(BusinessUniverseGetRequest) returns (BusinessUniverseGetResponse) {}
+    rpc UpdateBusinessUniverse(BusinessUniverseUpdateRequest) returns (BusinessUniverseUpdateResponse) {}
+
+    /**
+    * Company
+    **/
+    rpc CreateCompany(CreateRequest) returns (CompanyResponse) {}
+    rpc GetCompany(GetRequest) returns (CompanyResponse) {}
+    rpc GetCompanies(GetsRequest) returns (CompaniesGetResponse) {}
+    rpc UpdateCompany(UpdateRequest) returns (CompanyResponse) {}
+    rpc DeleteCompany(DeleteRequest) returns (DeleteResponse) {}
+
+    // Company bank
+    rpc AddCompanyBank(AddCompanyBankRequest) returns (CompanyResponse) {}
+    rpc GetCompanyBank(GetBankRequest) returns (GetBankResponse) {}
+    rpc GetCompanyBanks(GetCompanyBanksRequest) returns (GetBanksResponse) {}
+    rpc UpdateCompanyBank(UpdateBankRequest) returns (CompanyResponse) {}
+    rpc CloseCompanyBank(CloseBankRequest) returns (CompanyResponse) {}
+
+    // Company contact info
+    rpc AddCompanyContactInfo(AddCompanyContactInfoRequest) returns (CompanyResponse) {}
+    rpc GetCompanyContactInfo(GetContactInfoRequest) returns (GetContactInfoResponse) {}
+    rpc GetCompanyContactInfos(GetCompanyContactInfosRequest) returns (GetContactInfosResponse) {}
+    rpc UpdateCompanyContactInfo(UpdateContactInfoRequest) returns (CompanyResponse) {}
+    rpc DeleteCompanyContactInfo(DeleteContactInfoRequest) returns (CompanyResponse) {}
+
+    /**
+    * Customer
+    **/
+    rpc CreateCustomer(CreateRequest) returns (CustomerResponse) {}
+    rpc GetCustomer(GetRequest) returns (CustomerResponse) {}
+    rpc GetCustomers(GetsRequest) returns (CustomersGetResponse) {}
+    rpc UpdateCustomer(UpdateRequest) returns (CustomerResponse) {}
+    rpc DeleteCustomer(DeleteRequest) returns (DeleteResponse) {}
+
+    // Customer bank
+    rpc AddCustomerBank(AddCustomerBankRequest) returns (CustomerResponse) {}
+    rpc GetCustomerBank(GetBankRequest) returns (GetBankResponse) {}
+    rpc GetCustomerBanks(GetCustomerBanksRequest) returns (GetBanksResponse) {}
+    rpc UpdateCustomerBank(UpdateBankRequest) returns (CustomerResponse) {}
+    rpc CloseCustomerBank(CloseBankRequest) returns (CustomerResponse) {}
+
+    // Customer contact info
+    rpc AddCustomerContactInfo(AddCustomerContactInfoRequest) returns (CustomerResponse) {}
+    rpc GetCustomerContactInfo(GetContactInfoRequest) returns (GetContactInfoResponse) {}
+    rpc GetCustomerContactInfos(GetCustomerContactInfosRequest) returns (GetContactInfosResponse) {}
+    rpc UpdateCustomerContactInfo(UpdateContactInfoRequest) returns (CustomerResponse) {}
+    rpc DeleteCustomerContactInfo(DeleteContactInfoRequest) returns (CustomerResponse) {}
+
+    /**
+    * Contact types
+    **/
+    rpc CreateContactType(ContactTypeCreateRequest) returns (ContactTypeResponse) {}
+    rpc GetContactType(ContactTypeGetRequest) returns (ContactTypeResponse) {}
+    rpc GetContactTypes(ContactTypesGetRequest) returns (ContactTypesResponse) {}
+    rpc UpdateContactType(ContactTypeUpdateRequest) returns (ContactTypeResponse) {}
+}

@@ -1,0 +1,4 @@
+FROM scratch
+ADD ./build/user_grpc /
+ADD config/config.yml /config/
+CMD ["/user_grpc"]

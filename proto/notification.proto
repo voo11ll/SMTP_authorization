@@ -1,0 +1,31 @@
+syntax = "proto3";
+package notification;
+
+option go_package = "jetbrains.space/bnet24/bnet-24/b24_back/pkg/service/grpc/notification;notification";
+
+message SendMailConfirmLinkRequest {
+    string linkId = 1;
+    string email = 2;
+    string firstName = 3;
+    string lastName = 4;
+}
+
+message SendMailConfirmLinkResponse {
+    string statusENUM = 1;
+    string message = 2;
+}
+
+message MailConfirmationRequest {
+    string linkId = 1;
+    string hashKey = 2;
+}
+
+message MailConfirmationResponse {
+    string statusENUM = 1;
+    string message = 2;
+}
+
+service NotificationService {
+    rpc SendMailConfirmLink(SendMailConfirmLinkRequest) returns (SendMailConfirmLinkResponse) {}
+    rpc MailConfirmation(MailConfirmationRequest) returns (MailConfirmationResponse) {}
+}

@@ -1,0 +1,5 @@
+FROM progrium/busybox
+ADD ./build/notification_grpc /
+ADD config/config.yml /config/
+RUN  opkg-install ca-certificates
+CMD ["/notification_grpc"]
