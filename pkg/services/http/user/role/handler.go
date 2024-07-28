@@ -32,7 +32,7 @@ func CreateRole(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_createReq := toCreateRequest(&createReq)
 
@@ -71,7 +71,7 @@ func GetRole(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_getReq := toGetRequest(&getReq)
 
@@ -115,7 +115,7 @@ func GetRoleByName(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_getReq := toGetByNameRequest(&getReq)
 
@@ -151,7 +151,7 @@ func GetRoles(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	response, err := c.GetRoles(context.Background(), &user.RolesGetRequest{})
 
@@ -193,7 +193,7 @@ func UpdateRole(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_userUpdReq := toUpdateRequest(&updateReq)
 

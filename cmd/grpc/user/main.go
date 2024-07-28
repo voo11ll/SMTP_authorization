@@ -4,9 +4,6 @@ import (
 	"auth/auth_back/config"
 	"auth/auth_back/pkg/dbs"
 	"auth/auth_back/pkg/logger"
-	contactTypeRepository "auth/auth_back/pkg/repositories/contactType"
-	customerRepository "auth/auth_back/pkg/repositories/customer"
-	customerUserRepository "auth/auth_back/pkg/repositories/customerUser"
 	notificationRepository "auth/auth_back/pkg/repositories/notification"
 	roleRepository "auth/auth_back/pkg/repositories/role"
 	userRepository "auth/auth_back/pkg/repositories/user"
@@ -33,9 +30,6 @@ func main() {
 
 	userRepo := userRepository.ConnectRepository(db)
 	roleRepo := roleRepository.ConnectRepository(db)
-	customerUserRepo := customerUserRepository.ConnectRepository(db)
-	contactTypeRepo := contactTypeRepository.ConnectRepository(db)
-	customerRepo := customerRepository.ConnectRepository(db)
 	notifyRepo := notificationRepository.ConnectRepository(db)
 
 	listener, err := net.Listen("tcp", viper.GetString("grpc.user.host")+":"+viper.GetString("grpc.user.port"))
@@ -47,18 +41,15 @@ func main() {
 	}
 
 	userGrpcServer := user.GrpcServer{
-		UserRepo:                          userRepo,
-		RoleRepo:                          roleRepo,
-		CustomerUserRepo:                  customerUserRepo,
-		ContactTypeRepo:                   contactTypeRepo,
-		CustomerRepo:                      customerRepo,
-		NotifyRepo:                        notifyRepo,
-		UnimplementedB24UserServiceServer: user.UnimplementedB24UserServiceServer{},
+		UserRepo:                       userRepo,
+		RoleRepo:                       roleRepo,
+		NotifyRepo:                     notifyRepo,
+		UnimplementedUserServiceServer: user.UnimplementedUserServiceServer{},
 	}
 
 	grpcServer := grpc.NewServer()
 
-	user.RegisterB24UserServiceServer(grpcServer, &userGrpcServer)
+	user.RegisterUserServiceServer(grpcServer, &userGrpcServer)
 
 	if err := grpcServer.Serve(listener); err != nil {
 		l.LogError("Failed to serve: "+err.Error(), "cmd/app/main.main")

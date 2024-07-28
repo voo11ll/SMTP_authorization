@@ -1,7 +1,7 @@
 syntax = "proto3";
 package notification;
 
-option go_package = "jetbrains.space/bnet24/bnet-24/b24_back/pkg/service/grpc/notification;notification";
+option go_package = "github.com/SMTP_authorization/pkg/service/grpc/notification;notification";
 
 message SendMailConfirmLinkRequest {
     string linkId = 1;

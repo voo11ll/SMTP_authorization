@@ -39,7 +39,7 @@ func SignIn(w http.ResponseWriter, r *http.Request) {
 
 	defer clientConn.Close()
 
-	c := user.NewB24UserServiceClient(clientConn)
+	c := user.NewUserServiceClient(clientConn)
 
 	_signInReq := toUserSignInRequest(&signInReq)
 
@@ -114,7 +114,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 
 	defer clientConn.Close()
 
-	authClient := user.NewB24UserServiceClient(clientConn)
+	authClient := user.NewUserServiceClient(clientConn)
 
 	// Sing up user - register main user
 	_signUpReq := toUserSignUpRequest(&signUpReq)

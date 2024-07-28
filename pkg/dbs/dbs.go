@@ -7,7 +7,6 @@ import (
 	"time"
 
 	notificationModels "auth/auth_back/models/notification"
-	orgModels "auth/auth_back/models/organization"
 	userModels "auth/auth_back/models/user"
 
 	"github.com/spf13/viper"
@@ -72,15 +71,6 @@ func InitDB() *gorm.DB {
 
 func migrateSchemes(db *gorm.DB) error {
 	err := db.AutoMigrate(
-		&orgModels.BusinessUniverse{},
-		&orgModels.Company{},
-		&orgModels.CompanyBank{},
-		&orgModels.CompanyContactInfo{},
-		&orgModels.Customer{},
-		&orgModels.CustomerBank{},
-		&orgModels.CustomerContactInfo{},
-		&orgModels.CustomerUser{},
-		&orgModels.ContactType{},
 		&userModels.Role{},
 		&userModels.User{},
 		&notificationModels.MailConfrimationLinks{},

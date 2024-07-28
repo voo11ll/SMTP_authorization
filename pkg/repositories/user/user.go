@@ -7,7 +7,6 @@ import (
 	"auth/auth_back/pkg/globalvars"
 	"auth/auth_back/pkg/helpers/passwordHelper"
 	"auth/auth_back/pkg/logger"
-	businessUniverseRepository "auth/auth_back/pkg/repositories/businessUniverse"
 	notificationRepository "auth/auth_back/pkg/repositories/notification"
 	roleRepository "auth/auth_back/pkg/repositories/role"
 	"context"
@@ -20,15 +19,14 @@ import (
 var l = logger.Logger{}
 
 type User struct {
-	FirstName          string `json:"firstname"`
-	LastName           string `json:"lastname"`
-	SecondName         string `json:"secondname"`
-	Phone              string `json:"phone"`
-	Email              string `json:"email"`
-	Password           string `json:"password"`
-	Avatar             string `json:"avatar"`
-	RoleID             string `json:"roleId"`
-	BusinessUniverseID string `json:"businessUniverseId"`
+	FirstName  string `json:"firstname"`
+	LastName   string `json:"lastname"`
+	SecondName string `json:"secondname"`
+	Phone      string `json:"phone"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Avatar     string `json:"avatar"`
+	RoleID     string `json:"roleId"`
 }
 
 type UserRepository struct {
@@ -46,24 +44,21 @@ func ConnectRepository(db *gorm.DB) *UserRepository {
 
 	if userExists == nil {
 
-		buRepo := businessUniverseRepository.ConnectRepository(db)
 		roleRepo := roleRepository.ConnectRepository(db)
 		notifyRepo := notificationRepository.ConnectRepository(db)
 
-		bUniverce, _, _ := buRepo.CreateItem(ctx)
 		role := roleRepo.FindItemByName(ctx, "Administrator")
 
 		userPass, _ := passwordHelper.HashPassword("qweasd")
 
 		_, _, err := userRepository.CreateItem(ctx, &User{
-			Email:              "user@test.ru",
-			FirstName:          "User",
-			LastName:           "Test",
-			SecondName:         "test",
-			Phone:              "1234567",
-			Password:           userPass,
-			RoleID:             role.ID.String(),
-			BusinessUniverseID: bUniverce.ID.URN(),
+			Email:      "user@test.ru",
+			FirstName:  "User",
+			LastName:   "Test",
+			SecondName: "test",
+			Phone:      "1234567",
+			Password:   userPass,
+			RoleID:     role.ID.String(),
 		})
 
 		if err != nil {
@@ -141,18 +136,6 @@ func (r UserRepository) FindItemById(ctx context.Context, id uuid.UUID) *models.
 
 	return findedItem
 }
-
-// func (r UserRepository) FindAllItems(ctx context.Context, businessUniverseId uuid.UUID) []*models.User {
-// 	var findedItems []*models.User
-
-// 	tx := r.db.Where("business_universe_id = ?", businessUniverseId).Find(&findedItems)
-
-// 	if tx.Error != nil {
-// 		return nil
-// 	}
-
-// 	return findedItems
-// }
 
 func (r UserRepository) UpdateItem(ctx context.Context, item *User, itemId uuid.UUID) (*models.User, string, error) {
 	findedItem := r.FindItemById(ctx, itemId)

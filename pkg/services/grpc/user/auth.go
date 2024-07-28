@@ -6,10 +6,6 @@ import (
 	"auth/auth_back/pkg/logger"
 	context "context"
 
-	businessUniverseRepository "auth/auth_back/pkg/repositories/businessUniverse"
-	contactTypeRepository "auth/auth_back/pkg/repositories/contactType"
-	customerRepository "auth/auth_back/pkg/repositories/customer"
-	customerUserRepository "auth/auth_back/pkg/repositories/customerUser"
 	notificationRepository "auth/auth_back/pkg/repositories/notification"
 	userRepository "auth/auth_back/pkg/repositories/user"
 
@@ -22,14 +18,10 @@ import (
 )
 
 type GrpcServer struct {
-	UserRepo             *userRepository.UserRepository
-	RoleRepo             *roleRepository.RoleRepository
-	CustomerUserRepo     *customerUserRepository.CustomerUserRepository
-	BusinessUniverseRepo *businessUniverseRepository.BusinessUniverseRepository
-	ContactTypeRepo      *contactTypeRepository.ContactTypeRepository
-	CustomerRepo         *customerRepository.CustomerRepository
-	NotifyRepo           *notificationRepository.NotificationRepository
-	UnimplementedB24UserServiceServer
+	UserRepo   *userRepository.UserRepository
+	RoleRepo   *roleRepository.RoleRepository
+	NotifyRepo *notificationRepository.NotificationRepository
+	UnimplementedUserServiceServer
 }
 
 var l = logger.Logger{}
@@ -51,13 +43,8 @@ func (s *GrpcServer) SignUp(ctx context.Context, in *SignUpRequest) (*UserRespon
 	// Get admin role for main user
 	role := s.RoleRepo.FindItemByName(context.Background(), "Administrator")
 
-	// buId, _ := uuid.Parse(in.BusinessUniverseID)
 	_user := toSignUp(in)
 
-	// Create business universe for main user
-	newUniverse := GetAndCreateBusinessUniverseGrpcClient("")
-	// buId, _ = uuid.Parse(newUniverse.BusinessUniverse.Id)
-	_user.BusinessUniverseID = newUniverse.BusinessUniverse.Id
 	_user.RoleID = role.ID.String()
 
 	_user.Password, _ = passwordHelper.HashPassword(_user.Password)

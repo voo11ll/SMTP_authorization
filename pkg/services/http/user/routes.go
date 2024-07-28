@@ -4,7 +4,6 @@ import (
 	"auth/auth_back/pkg/helpers/httpServerHelper"
 	"auth/auth_back/pkg/middleware"
 	authHandler "auth/auth_back/pkg/services/http/user/auth"
-	customerUserHandler "auth/auth_back/pkg/services/http/user/customerUser"
 	roleHandler "auth/auth_back/pkg/services/http/user/role"
 	userHandler "auth/auth_back/pkg/services/http/user/user"
 )
@@ -93,43 +92,6 @@ var Routes = httpServerHelper.Routes{
 		Method:      "GET",
 		Pattern:     "/user/by-email",
 		HandlerFunc: userHandler.GetUserByEmail,
-		Middleware:  middleware.UserMiddleware,
-	},
-	/**
-	* Customer users
-	**/
-	httpServerHelper.Route{
-		Name:        "AddCustomerUser",
-		Method:      "POST",
-		Pattern:     "/user/customer/new-user",
-		HandlerFunc: customerUserHandler.AddCustomerUser,
-	},
-	httpServerHelper.Route{
-		Name:        "ChangeCustomerUserPassword",
-		Method:      "PUT",
-		Pattern:     "/user/customer/user-password",
-		HandlerFunc: customerUserHandler.ChangePassword,
-		Middleware:  middleware.UserMiddleware,
-	},
-	httpServerHelper.Route{
-		Name:        "UpdateCustomerUser",
-		Method:      "PUT",
-		Pattern:     "/user/customer/user-update",
-		HandlerFunc: customerUserHandler.UpdateUser,
-		Middleware:  middleware.UserMiddleware,
-	},
-	httpServerHelper.Route{
-		Name:        "GetCustomerUser",
-		Method:      "GET",
-		Pattern:     "/user/customer/users",
-		HandlerFunc: customerUserHandler.GetUserById,
-		Middleware:  middleware.UserMiddleware,
-	},
-	httpServerHelper.Route{
-		Name:        "GetCustomerUserByEmail",
-		Method:      "GET",
-		Pattern:     "/user/customer/user-by-email",
-		HandlerFunc: customerUserHandler.GetUserByEmail,
 		Middleware:  middleware.UserMiddleware,
 	},
 }

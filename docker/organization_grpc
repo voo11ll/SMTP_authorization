@@ -1,4 +1,0 @@
-FROM scratch
-ADD ./build/organization_grpc /
-ADD config/config.yml /config/
-CMD ["/organization_grpc"]

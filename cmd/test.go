@@ -2,7 +2,6 @@ package main
 
 import (
 	"auth/auth_back/config"
-	org "auth/auth_back/pkg/services/grpc/organization"
 	auth "auth/auth_back/pkg/services/grpc/user"
 	"context"
 	"log"
@@ -36,10 +35,10 @@ func testSignUpUser() {
 	}
 	defer conn.Close()
 
-	c := auth.NewB24UserServiceClient(conn)
+	c := auth.NewUserServiceClient(conn)
 
 	response, err := c.SignUp(context.Background(), &auth.SignUpRequest{
-		Email:     "andrey.melkov@gmail.com",
+		Email:     "eddy.play@mail.ru",
 		Password:  "123456",
 		Phone:     "1234567",
 		FirstName: "User",
@@ -65,10 +64,10 @@ func testSignInUser() {
 	}
 	defer conn.Close()
 
-	c := auth.NewB24UserServiceClient(conn)
+	c := auth.NewUserServiceClient(conn)
 
 	response, err := c.SignIn(context.Background(), &auth.SignInRequest{
-		Email:    "andrey.melkov@gmail.com",
+		Email:    "eddy.play@mail.ru",
 		Password: "123456",
 	})
 
@@ -92,15 +91,10 @@ func testBUCreate() {
 	}
 	defer conn.Close()
 
-	c := org.NewB24OrganizationServiceClient(conn)
-
-	response, err := c.CreateBusinessUniverse(context.Background(), &org.BusinessUniverseCreateRequest{})
-
 	if err != nil {
 		log.Fatalf("Error when calling creating user: %s", err)
 	}
 
-	log.Printf("Response from server: %s %s", response.BusinessUniverse.Id, response.Message)
 }
 
 func testBUFind() {
@@ -115,17 +109,10 @@ func testBUFind() {
 	}
 	defer conn.Close()
 
-	c := org.NewB24OrganizationServiceClient(conn)
-
-	response, err := c.GetBusinessUniverse(context.Background(), &org.BusinessUniverseGetRequest{
-		Id: "26e4d227-8e6e-4e5b-9322-c15b394ecb5f",
-	})
-
 	if err != nil {
 		log.Fatalf("Error when calling creating user: %s", err)
 	}
 
-	log.Printf("Response from server: %d %s %s %s %s", response.Code, response.Message, response.BusinessUniverse.Id, response.BusinessUniverse.Name, response.BusinessUniverse.Domain)
 }
 
 func testRolesFind() {
@@ -140,7 +127,7 @@ func testRolesFind() {
 	}
 	defer conn.Close()
 
-	c := auth.NewB24UserServiceClient(conn)
+	c := auth.NewUserServiceClient(conn)
 
 	response, err := c.GetRoles(context.Background(), &auth.RolesGetRequest{})
 
@@ -163,7 +150,7 @@ func testRoleFind() {
 	}
 	defer conn.Close()
 
-	c := auth.NewB24UserServiceClient(conn)
+	c := auth.NewUserServiceClient(conn)
 
 	response, err := c.GetRole(context.Background(), &auth.RoleGetRequest{
 		Id: "6b6634c1-364d-4dc7-a999-9ab2688a60b1",

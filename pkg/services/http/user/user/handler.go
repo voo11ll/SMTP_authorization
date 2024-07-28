@@ -34,7 +34,7 @@ func ChangePassword(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	changePassReq.Id = userId
 
@@ -89,7 +89,7 @@ func UpdateUser(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	updateReq.Id = userId
 
@@ -142,7 +142,7 @@ func GetUserByEmail(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_getUserReq := toUserGetByEmailRequest(&getUserReq)
 
@@ -189,7 +189,7 @@ func GetUserById(w http.ResponseWriter, r *http.Request) {
 	}
 	defer conn.Close()
 
-	c := user.NewB24UserServiceClient(conn)
+	c := user.NewUserServiceClient(conn)
 
 	_getUserReq := toUserGetByIdRequest(&getUserReq)
 

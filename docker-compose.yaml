@@ -1,4 +1,3 @@
-version: '3.5'
 services:
   b24-nginx:
     image: nginx:latest
@@ -12,7 +11,6 @@ services:
       - ./static:/static
     links:
       - b24-user-http
-      - b24-organization-http
 
   b24-db:
     image: postgres:latest
@@ -44,30 +42,6 @@ services:
     build:
       context: .
       dockerfile: docker/user_http
-    links:
-      - b24-db
-    volumes:
-      - ./logs/services:/logs/services
-      - ./static:/static
-
-  b24-organization-grpc:
-    restart: always
-    container_name: b24-organization-grpc
-    build:
-      context: .
-      dockerfile: docker/organization_grpc
-    links:
-      - b24-db
-    volumes:
-      - ./logs/services:/logs/services
-      - ./static:/static
-
-  b24-organization-http:
-    restart: always
-    container_name: b24-organization-http
-    build:
-      context: .
-      dockerfile: docker/organization_http
     links:
       - b24-db
     volumes:

@@ -1,4 +1,0 @@
-FROM scratch
-ADD ./build/organization_http /
-ADD config/config.yml /config/
-CMD ["/organization_http"]
